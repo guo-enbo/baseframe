@@ -1,0 +1,95 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'org.greenrobot.greendao'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        minSdkVersion 19
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "int", "BUILD_GRADLE_RELEASE_STATUS", BuildReleaseStatus
+        buildConfigField "int", "BUILD_GRADLE_DEV_STATUS", BuildDevStatus
+        buildConfigField "int", "BUILD_GRADLE_TEST_STATUS", BuildTestStatus
+    }
+    buildTypes {
+        debug {
+            buildConfigField "int", "BUILD_GRADLE_STATUS", BuildLibStatus
+            if (BuildLibStatus == BuildReleaseStatus) {
+                buildConfigField "String", "BUILD_GRADLE_BASEURL", BaseReleaseUrl
+            } else if (BuildLibStatus == BuildDevStatus) {
+                buildConfigField "String", "BUILD_GRADLE_BASEURL", BaseDevUrl
+            } else if (BuildLibStatus == BuildTestStatus) {
+                buildConfigField "String", "BUILD_GRADLE_BASEURL", BaseTestUrl
+            }
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+        release {
+            buildConfigField "int", "BUILD_GRADLE_STATUS", BuildLibStatus
+            if (BuildLibStatus == BuildReleaseStatus) {
+                buildConfigField "String", "BUILD_GRADLE_BASEURL", BaseReleaseUrl
+            } else if (BuildLibStatus == BuildDevStatus) {
+                buildConfigField "String", "BUILD_GRADLE_BASEURL", BaseDevUrl
+            } else if (BuildLibStatus == BuildTestStatus) {
+                buildConfigField "String", "BUILD_GRADLE_BASEURL", BaseTestUrl
+            }
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+    }
+    lintOptions {
+        disable 'GoogleAppIndexingWarning'
+        baseline file("lint-baseline.xml")
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api 'com.android.support:appcompat-v7:28.+'
+    api 'com.android.support:support-v4:28.+'
+    api 'com.android.support.constraint:constraint-layout:1.1.3'
+
+    api 'com.android.support:design:28.+'
+    api 'com.android.support:recyclerview-v7:28.+'
+
+    api 'com.google.code.gson:gson:2.2.4'
+    api 'com.squareup.okhttp3:okhttp:3.10.0'
+    api 'com.cjj.materialrefeshlayout:library:1.3.0'
+    api 'com.commit451:PhotoView:1.2.4'
+    api 'id.zelory:compressor:2.1.0'
+    api 'de.hdodenhof:circleimageview:2.1.0'
+    api 'com.bigkoo:ConvenientBanner:2.1.4'
+    api 'com.superluo:textbannerview:1.0.5'
+    api 'com.mcxiaoke.volley:library:1.0.+'
+
+    api 'com.yanzhenjie.permission:support:2.0.1'
+    api 'org.projectlombok:lombok:1.16.18'
+    annotationProcessor 'org.projectlombok:lombok:1.16.18'
+    api 'com.github.bumptech.glide:glide:4.4.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0' //注解处理器
+
+    api 'com.squareup.retrofit2:retrofit:2.4.0'
+    api 'com.squareup.retrofit2:converter-gson:2.4.0'
+    api 'com.squareup.retrofit2:converter-scalars:2.4.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    api 'io.reactivex.rxjava2:rxjava:2.1.14'
+    api 'io.reactivex.rxjava2:rxandroid:2.0.2'
+
+    api 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+
+    api 'javax.annotation:javax.annotation-api:1.2'
+
+    api 'com.contrarywind:Android-PickerView:4.1.6'
+    api 'com.afollestad.material-dialogs:core:0.9.6.0'
+
+    api 'org.greenrobot:greendao:3.2.0'
+
+}
