@@ -20,7 +20,7 @@ public class GlideConfigModule extends AppGlideModule {
     public void applyOptions(@NonNull Context context, @NonNull GlideBuilder builder) {
         //修改默认配置，如缓存配置
         builder.setDiskCache(new ExternalPreferredCacheDiskCacheFactory(context));
-        builder.build(context);
+        //builder.build(context);
     }
 
 
